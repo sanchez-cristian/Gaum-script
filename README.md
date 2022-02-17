@@ -10,3 +10,5 @@ Gaum latest version is **Gaum v1.1**
 
 To run Gaum.sh got to terminal an excute:
 `sh gaum_1_1.sh`
+
+I need to work
