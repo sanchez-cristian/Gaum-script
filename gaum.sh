@@ -7,17 +7,13 @@
 # Created by Cristian Sánchez.
 # February 14, 2022.
 #
-#
-#
-
-
 clear 
 
 bold=$(tput bold)
 normal=$(tput sgr0)
 
 echo " ------------------ ----------------"
-echo "|    ${bold}GAUM SCRIPT${normal}   |  vers:  1.1    |"
+echo "|    ${bold}GAUM SCRIPT${normal}   |  vers:  1.3    |"
 echo "\`------------------´'-----------------------"
 echo "1. Users management                         \\"
 echo " \`- c)      Create a new user               |"
@@ -29,6 +25,7 @@ echo "-------------------------------------------- "
 echo "2. Group management                         |"
 echo " \`- n)      Create new a group              |"
 echo " '- add)    Add user to group               |"
+echo " '- am)     Add user massively to group     |"
 echo " '- ex)     Exclude user                    |"
 echo " '- r)      Remove group                    |"
 echo " \`- lg)      List a group                   /"
@@ -169,6 +166,7 @@ case $eleccion in
 
 			if [ $i -eq 1 ]; then
 				echo "Deleting users:"
+				echo ""
 				printf "["
 			fi
 
@@ -196,7 +194,8 @@ case $eleccion in
 			read -p "Press any key to go back to menu: " back
 			/dev/null > log.txt 
 			sh gaum.sh
-		else 
+		else
+            /dev/null > log.txt
 			sh gaum.sh
 		fi;;
 
@@ -204,7 +203,7 @@ case $eleccion in
 		clear 
 		echo "---------------------------------------"
 		echo ""
-		echo "USUARIOS: "
+		echo "USERS: "
 		echo ""
 		cat /etc/passwd
 
@@ -233,8 +232,7 @@ case $eleccion in
 		else 
 			echo ""
 			echo "${bold}Group $groupname not created${normal}"
-			echo ""
-   
+			echo ""	
 		fi
 
 
@@ -259,6 +257,7 @@ case $eleccion in
 		echo "  >  Group name to add $username"
 		echo "     '"
 		read -p "     $: " groupname	
+		echo ""
 		echo "---------------------------------------"
 		echo ""
 
@@ -266,12 +265,11 @@ case $eleccion in
 		
 		if [ $? -eq 0 ]; then
 			echo "${bold}User $username added successfully${normal}"
-			echo ""
 		else 
 			echo "${bold}User $username not added: "
-			echo ""	
 		fi
 
+		echo ""
 		echo "---------------------------------------"
 		echo ""
 		
@@ -279,28 +277,166 @@ case $eleccion in
 		sh gaum.sh;;
 
 	am)
-		clear
-		read -p "identificador de los nombres de usuario: " usernames
-		read -p "inicio usuarios" startp
-		read -p "end usuarios" endp
-		read -p "nombre del grupo al que añadir los usuarios: " group
 
+		clear
+
+		echo " ------------------"	
+		echo "|    ${bold}GAUM SCRIPT${normal}   | ${bold}Ctrl + c${normal} to quit|"		
+		echo "\`------------------´'----------------"
+		echo ""
+		echo "  >  Common users identifier"
+		echo "     '"
+		read -p "     $: " usernames
+		echo ""
+		echo "---------------------------------------"
+		echo ""
+		echo "  >  Users list start point"
+		echo "     '"
+		read -p "     $: " startp
+		echo ""
+		echo "---------------------------------------"
+		echo ""
+		echo "  >  Users list end point"
+		echo "     '"
+		read -p "     $: " endp
+		echo ""
+		echo "---------------------------------------"
+		echo ""
+		echo "  >  Name of the group to add users to"
+		echo "     '"
+		read -p "     $: " group
+		echo ""
+		echo "---------------------------------------"
+
+
+		clear
+		
+		echo ""
 		for i in $(seq $startp $endp)
 		do
 			sudo usermod -a -G $group $usernames$i
-			echo "usuario $username$i añadido al grupo $group"
+
+			if [ $i -eq $startp ]; then
+				echo "Adding users to the group:"
+				echo ""
+				printf "["
+			fi
+
+			printf "#"
+			sleep .1
+
+			if [ $i -eq $endp ]; then
+				printf "]"
+			fi
 		done
 
-		sleep .5
+		echo ""
+		echo "---------------------------------------"
+		echo ""
+		echo ""
+
+		read -p "Press any key to go back to menu: " back
 		sh gaum.sh;;
 
 	ex)
-		;;
+        clear
+
+        echo " ------------------"
+        echo "|    ${bold}GAUM SCRIPT${normal}   | ${bold}Ctrl + c${normal} to quit|"
+        echo "\`------------------´'----------------"
+        echo ""
+        echo "  >  Common identifier of users to exlcude"
+        echo "     '"
+        read -p "     $: " usernames
+        echo ""
+        echo "-------------------------------------------"
+        echo ""
+        echo "  >  Users list start point"
+        echo "     '"
+        read -p "     $: " startp
+        echo ""
+        echo "-------------------------------------------"
+        echo ""
+        echo "  >  Users list end point"
+        echo "     '"
+        read -p "     $: " endp
+        echo ""
+        echo "-------------------------------------------"
+        echo ""
+        echo "  >  Group name to exclude users"
+        echo "     '"
+        read -p "     $: " group
+        echo ""
+        echo "-------------------------------------------"
+
+
+        clear
+        
+        echo ""
+        for i in $(seq $startp $endp)
+        do
+            sudo gpasswd -d $usernames$i $group >> log.txt
+
+            if [ $i -eq $startp ]; then
+                echo "Adding users to the group:"
+                echo ""
+                printf "["
+            fi
+
+            printf "#"
+            sleep .1
+
+            if [ $i -eq $endp ]; then
+                printf "]"
+            fi
+        done
+
+        echo ""
+        echo "---------------------------------------"
+        echo ""
+        read -p "Want to check log file (y/n): " election
+        echo ""
+        echo "---------------------------------------"
+
+        if [ $election = "y" ]; then
+            more log.txt
+            echo ""
+            echo "---------------------------------------"
+            read -p "Press any key to go back to menu: " back
+            /dev/null > log.txt
+            sh gaum.sh
+        else
+            /dev/null > log.txt
+            sh gaum.sh
+        fi;;
 
 	r)
-		read -p "nombre del grupo a eliminar: " group
+        echo ""
+		read -p "Group name to delete: " group
 
 		sudo groupdel $group
 
-		echo "grupo elimindo correctamente";;	
+		echo "${bold}Group deleted successfully${normal}"
+        echo ""
+        echo "---------------------------------------"
+        echo ""
+
+        read -p "Press any key to go back to menu: " back
+        sh gaum.sh;;
+        
+    lg)
+        clear
+        
+        echo "---------------------------------------"
+        echo ""
+        echo "GROUPS: "
+        echo ""
+        cat /etc/group
+
+        echo ""
+        echo "---------------------------------------"
+        echo ""
+        read -p "Press any key to go back to menu: " back
+        sh gaum.sh;;
+
 esac
