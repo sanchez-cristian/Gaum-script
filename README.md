@@ -28,24 +28,16 @@ To improve the usability of Gaum it's recommended to run the sh command being su
 using `passwd` command. As in the example below. 
 `sudo passwd example_username`
 
-`c` \- Create new User.
-
-`cm` \- Create new users in bulk by getting user_example1, user_example2... You will set users cuantity.
-
-`d` \- Delete a User.
-
-`dm` \- Delete users in bulk. It's needed all users identifier. As in the example of the `cm` command, we have 'user_example' which is the common identifier.
-
-`l` \- List of users.
-
-`n` \- Create new group.
-
-`add` \- Add user to a group.
-
-`am` \- Massively add users to a group.
-
-`ex` \- Massively exclude users to a group. This means massively removing users from a group.
-
-`r` \- Remove a group
-
-`lg` \- List of groups
+| Input | Description |
+| --- | ----------- |
+|  `c`  | Create new User. |
+|  `cm`  | Create new users in bulk by getting user_example1, user_example2... You will set users cuantity. |
+|  `d`  | Delete a User. |
+|  `dm`  | Delete users in bulk. It's needed all users identifier. As in the example of the `cm` command, we have 'user_example' which is the common identifier. |
+|  `l`  | List of users. |
+|  `n`  | Create new group. |
+|  `add`  | Add user to a group. |
+|  `am`  | Massively add users to a group. |
+|  `ex`  | Massively exclude users to a group. This means massively removing users from a group. |
+|  `r`  | Remove a group. |
+|  `lg`  | List of groups. |
