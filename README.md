@@ -14,7 +14,7 @@ To clone the repository go to the directory where you want to save the repositor
 
 ## How to Run
 
-Use is so easy, whether you have downloaded the repository or cloned it you will see `gaum.sh` file on it. This file is a Bash Shell Script this means that you can run it using `sh` command. As below.
+Use is so easy, whether you have downloaded the repository or cloned it you will see `gaum.sh` file on it. This file is a Bash Shell Script this means that you can run it using `sh` command. As below:
 
 `sh gaum.sh`
 
@@ -24,8 +24,8 @@ To improve the usability of Gaum it's recommended to run the sh command being su
 
 ## Commands
 
-> **NOTE:** It's important to know that Gaum doesn't handle created user password because it can be a security breach. But that can be solved 
-using `passwd` command. As in the example below. 
+> **NOTE:** It's important to know that Gaum create users using the same username as password .That can be solved 
+using `passwd` command. As in the example. 
 `sudo passwd example_username`
 
 | Input | Description |
