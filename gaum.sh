@@ -91,7 +91,7 @@ case $eleccion in
 
 		for i in $(seq 1 $cuantity)
 		do
-			sudo useradd $user_name$i
+			sudo useradd -p $(mkpasswd $user_name$i) $user_name$i
 
 			if [ $i -eq 1 ]; then
 				echo "Creating users:"
@@ -109,7 +109,8 @@ case $eleccion in
 		echo ""
 		echo "${bold}Users created successfully.${normal}"
 		echo ""
-		echo "Now, before login, use passwd to change user password."
+		echo "Now, for login use the same username as"
+		echo "password and then change"
 		echo ""
 		echo "---------------------------------------"
 		echo ""
