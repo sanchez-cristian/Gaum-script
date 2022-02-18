@@ -4,7 +4,7 @@ Gaum is a shell script created in bash 5.1. The purpose of this script is to fac
 
 #### Latest version is:
 
-![GitHub release (latest by date)](https://img.shields.io/github/v/release/sanchez-cristian/Gaum-script?label=Script%20version&logo=GNU%20Bash&logoColor=%23fff)
+![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/sanchez-cristian/Gaum-script?color=%233398FF&label=Script%20version&logo=GNU%20Bash&logoColor=%23fff)
 
 ## Clone Project
 
